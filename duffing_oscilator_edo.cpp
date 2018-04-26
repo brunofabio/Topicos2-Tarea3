@@ -36,4 +36,31 @@ int main()
 	ofstream file(file_name.c_str()); 
 	double t = 0; 
 	file << t << ’\t’ << xv[0] << ’\t’ << xv[1] << ’\n’;
+	while (t < t_max) { 
+	 // Paso Runge-Kutta de 4to orden
+	 	double k1[2], k2[2], k3[2], k4[2], xv_step[2], dxvdt[2]; 
+	 	find_dxvdt(t, xv, dxvdt); 
+	 	for (int i = 0; i < 2; i++) 
+	 		k1[i] = dt * dxvdt[i]; 
+	 	for (int i = 0; i < 2; i++) 
+	 		xv_step[i] = xv[i] + k1[i]/2; 
+	 	find_dxvdt(t + 0.5 * dt, xv_step, dxvdt); 
+	 	for (int i = 0; i < 2; i++) 
+	 		k2[i] = dt * dxvdt[i]; 
+	 	for (int i = 0; i < 2; i++) 
+	 		xv_step[i] = xv[i] + k2[i]/2;
+	 	find_dxvdt(t + 0.5 * dt, xv_step, dxvdt); 
+	 	for (int i = 0; i < 2; i++) 
+	 		k3[i] = dt * dxvdt[i]; 
+	 	for (int i = 0; i < 2; i++) 
+	 		xv_step[i] = xv[i] + k3[i]; 
+	 	find_dxvdt(t + dt, xv_step, dxvdt); 
+	 	for (int i = 0; i < 2; i++) 
+	 		k4[i] = dt * dxvdt[i]; 
+	 	for (int i = 0; i < 2; i++) 
+	 		xv[i] += (k1[i] + 2 * k2[i] + 2 * k3[i] + k4[i]) / 6.0; 
+	 	t += dt; 
+	 	file << t << ’\t’ << xv[0] << ’\t’ << xv[1] << ’\n’;
+	 	 } 
+	file.close(); cout << " Salida en archivo: " << file_name << endl; 
 }
