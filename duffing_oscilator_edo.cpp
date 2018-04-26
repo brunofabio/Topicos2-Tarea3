@@ -18,5 +18,22 @@ dxvdt[1] = - gamma_ * xv[1] + 2 * a * xv[0] - 4 * b * pow(xv[0], 3.0) + F0 * cos
 
 int main() 
 {
- 
+ 	double xv[2]; // array: xv[0] = x, xv[1] = v 
+	double dt, t_max; 
+	string file_name;
+	cout << " Duffing Oscillator\n" 
+	<< " =============================\n" 
+	<< " Ingresar x and v inicial: ";
+	cin >> xv[0] >> xv[1];
+	cout << " Ingresar el tiempo de paso dt: ";
+
+	cin >> dt; 
+	cout << " Ingresar el tiempo de integración: "; 
+	cin >> t_max; 
+	cout << " Ingresar el nombre del archivo de salida: "; 
+	cin >> file_name;
+
+	ofstream file(file_name.c_str()); 
+	double t = 0; 
+	file << t << ’\t’ << xv[0] << ’\t’ << xv[1] << ’\n’;
 }
